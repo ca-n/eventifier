@@ -1,8 +1,10 @@
 package xyz.carn.eventifier.service;
 
+import org.springframework.stereotype.Service;
 import xyz.carn.eventifier.model.Participant;
 import xyz.carn.eventifier.repository.ParticipantRepository;
 
+@Service
 public class ParticipantService {
     private final ParticipantRepository repository;
 
