@@ -16,6 +16,6 @@ public class AdminService {
     }
 
     public Optional<Admin> login(User credentials) {
-
+        return repository.findByEmailAndPassword(credentials.getEmail(), credentials.getPassword());
     }
 }
