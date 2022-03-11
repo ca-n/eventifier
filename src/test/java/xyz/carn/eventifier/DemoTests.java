@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 public class DemoTests {
-
     @Test
     public void thisTestWillPass() {
         assertTrue(true);
