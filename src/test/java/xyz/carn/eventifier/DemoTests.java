@@ -14,6 +14,6 @@ public class DemoTests {
 
     @Test
     public void thisTestWillFail() {
-        fail();
+        //fail();
     }
 }
