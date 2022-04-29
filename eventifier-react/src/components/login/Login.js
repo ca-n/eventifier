@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Alert, Button, Container, Form } from 'react-bootstrap'
+import { useNavigate } from 'react-router-dom'
 
 const Login = ({ setUser }) => {
   const [credentials, setCredentials] = useState({
@@ -7,6 +8,7 @@ const Login = ({ setUser }) => {
     password: ""
   })
   const [success, setSuccess] = useState(false)
+  const navigate = useNavigate();
 
   const login = async (e) => {
     e.preventDefault()
@@ -21,7 +23,8 @@ const Login = ({ setUser }) => {
     })
     const data = await res.json()
     setUser(data)
-    setSuccess(true)
+    if (data) setSuccess(true)
+    navigate("/dashboard")
   }
 
   const onChange = (e) => {
