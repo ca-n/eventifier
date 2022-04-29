@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Alert, Button, Container, Form } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 
@@ -9,6 +9,10 @@ const Login = ({ setUser }) => {
   })
   const [success, setSuccess] = useState(false)
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setUser({email: ""})
+  }, [setUser]);
 
   const login = async (e) => {
     e.preventDefault()

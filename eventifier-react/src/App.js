@@ -18,7 +18,7 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login setUser={setUser}/>}/>
           <Route path="/register" element={<Register/>}/>
-          <Route path="/dashboard" element={<Dashboard/>}/>
+          <Route path="/dashboard" element={<Dashboard user={user}/>}/>
         </Routes>
       </Router>
     </div>
