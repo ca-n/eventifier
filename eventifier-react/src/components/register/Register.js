@@ -21,7 +21,7 @@ const Register = () => {
         body: JSON.stringify(participant)
       })
       const data = await res.json()
-      setSuccess(true)
+      if (data) setSuccess(true)
     }
 
     const registerOrganizer = (organizer) => {
