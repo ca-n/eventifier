@@ -1,32 +1,51 @@
-import React from 'react'
-import { Container } from 'react-bootstrap'
+import React, { useState } from 'react'
+import { Button, Container, Form } from 'react-bootstrap'
 
 const RegisterOrganizer = ({ registerOrganizer }) => {
+  const [validated, setValidated] = useState(false)
+  const [organizer, setOrganizer] = useState({
+    email: "",
+    password: "",
+    name: ""
+  })
+
+  const register = async (e) => {
+    e.preventDefault()
+    const form = e.currentTarget
+    setValidated(true)
+    if (form.checkValidity()) {
+      registerOrganizer(organizer)
+    }
+  }
+
+  const onChange = (e) => {
+    const { id, value } = e.target
+    setOrganizer({
+      ...organizer,
+      [id]: value,
+    })
+  }
+
   return (
     <Container>
-      <form onSubmit={registerOrganizer}>
-        <div className="mb-3">
-          <label htmlFor="register-email" className="form-label">Email</label>
-          <input type="email" className="form-control" id="register-email" placeholder="mail@example.com"/>
-        </div>
+      <Form noValidate validated={validated} onSubmit={register} onChange={onChange}>
+        <Form.Group className="mb-3" controlId="email">
+          <Form.Label>Courriel</Form.Label>
+          <Form.Control required type="email"/>
+        </Form.Group>
 
-        <div className="mb-3">
-          <label htmlFor="register-firstname" className="form-label">Organization Name</label>
-          <input type="text" className="form-control" id="register-orgname"/>
-        </div>
+        <Form.Group className="mb-3" controlId="name">
+          <Form.Label>Nom de l'organization</Form.Label>
+          <Form.Control required type="text"/>
+        </Form.Group>
 
-        <div className="mb-3">
-          <label htmlFor="register-password" className="form-label">Password</label>
-          <input type="password" className="form-control" id="register-password"/>
-        </div>
+        <Form.Group className="mb-3" controlId="password">
+          <Form.Label>Mot de Passe</Form.Label>
+          <Form.Control required type="password"/>
+        </Form.Group>
 
-        <div className="mb-3">
-          <label htmlFor="register-password" className="form-label">Confirm Password</label>
-          <input type="password" className="form-control" id="register-confirm-pass"/>
-        </div>
-        
-        <button type="submit" className="btn btn-primary mb-3">Register</button>
-      </form>
+        <Button variant="primary" type="submit">S'inscrire</Button>
+      </Form>
     </Container>
   )
 }

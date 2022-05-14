@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Button, Container, Form } from 'react-bootstrap'
 
 const RegisterParticipant = ({ registerParticipant }) => {
+  const [validated, setValidated] = useState(false)
   const [participant, setParticipant] = useState({
     email: "",
     password: "",
@@ -11,12 +12,15 @@ const RegisterParticipant = ({ registerParticipant }) => {
 
   const register = async (e) => {
     e.preventDefault()
-    registerParticipant(participant)
+    const form = e.currentTarget
+    setValidated(true)
+    if (form.checkValidity()) {
+      registerParticipant(participant)
+    }
   }
 
   const onChange = (e) => {
     const { id, value } = e.target
-    if (id === "passwordConfirm") return
     setParticipant({
       ...participant,
       [id]: value,
@@ -25,33 +29,28 @@ const RegisterParticipant = ({ registerParticipant }) => {
 
   return (
     <Container>
-      <Form onSubmit={register} onChange={onChange}>
+      <Form noValidate validated={validated} onSubmit={register} onChange={onChange}>
         <Form.Group className="mb-3" controlId="email">
-          <Form.Label>Email</Form.Label>
-          <Form.Control type="email" placeholder="mail@example.com"/>
+          <Form.Label>Courriel</Form.Label>
+          <Form.Control required type="email"/>
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="firstName">
-          <Form.Label>First Name</Form.Label>
-          <Form.Control type="text"/>
+          <Form.Label>Prénom</Form.Label>
+          <Form.Control required type="text"/>
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="lastName">
-          <Form.Label>Last Name</Form.Label>
-          <Form.Control type="text"/>
+          <Form.Label>Nom</Form.Label>
+          <Form.Control required type="text"/>
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="password">
-          <Form.Label>Password</Form.Label>
-          <Form.Control type="password"/>
+          <Form.Label>Mot de Passe</Form.Label>
+          <Form.Control required type="password"/>
         </Form.Group>
 
-        <Form.Group className="mb-3" controlId="passwordConfirm">
-          <Form.Label>Confirm Password</Form.Label>
-          <Form.Control type="password"/>
-        </Form.Group>
-
-        <Button variant="primary" type="submit">Register</Button>
+        <Button variant="primary" type="submit">S'inscrire</Button>
       </Form>
     </Container>
   )

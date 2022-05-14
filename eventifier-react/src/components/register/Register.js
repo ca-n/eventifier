@@ -1,47 +1,45 @@
 import React, { useState } from 'react'
-import { Alert, Container } from 'react-bootstrap'
+import { Alert, Button, ButtonGroup, Container } from 'react-bootstrap'
+import { useNavigate } from 'react-router-dom';
 import RegisterOrganizer from './RegisterOrganizer';
 import RegisterParticipant from './RegisterParticipant';
 
 const Register = () => {
     const [registerType, setRegisterType] = useState("participant");
-    const [success, setSuccess] = useState(false);
+    const [status, setStatus] = useState(0);
+    const navigate = useNavigate()
+
 
     const onChangeRegisterType = (event) => {
         setRegisterType(event.target.value);
     }
 
-    const registerParticipant = async (participant) => {
-      const res = await fetch("http://localhost:8080/participant",
+    const register = async (user) => {
+      const res = await fetch(`http://localhost:8080/${registerType}`,
       {
         method: 'POST',
         headers: {
           'Content-type': 'application/json'
         },
-        body: JSON.stringify(participant)
+        body: JSON.stringify(user)
       })
-      const data = await res.json()
-      if (data) setSuccess(true)
-    }
-
-    const registerOrganizer = (organizer) => {
-
+      setStatus(res.status)
+      if (res.ok) {
+        setTimeout(() => navigate("/login"), 1000)
+      }
     }
 
   return (
     <Container>
-        <h1>Register</h1>
-        {success ? <Alert variant="success">Registered Successfully!</Alert> : ""}
-        <div className="btn-group" role="group" onChange={onChangeRegisterType}>
-            <input type="radio" className="btn-check" value="participant" name="regtype" id="reg-par" defaultChecked/>
-            <label className="btn btn-outline-primary" htmlFor="reg-par">Participant</label>
-
-            <input type="radio" className="btn-check" value="organizer" name="regtype" id="reg-org"/>
-            <label className="btn btn-outline-primary" htmlFor="reg-org">Organizer</label>
-        </div>
-        {registerType === "participant" ? 
-        (<RegisterParticipant registerParticipant={registerParticipant}/>):
-        (<RegisterOrganizer registerOrganizer={registerOrganizer}/>)}
+        {status === 200 ? <Alert variant="success">Inscription Réussi!</Alert>:""}
+        {status >= 400 ? <Alert variant="danger">Inscription Échoué. {status}</Alert>:""}
+        <h1>Inscription</h1>
+        <ButtonGroup size="sm" onClickCapture={onChangeRegisterType}>
+          <Button variant={registerType === "participant" ? "primary" : "outline-primary"} value="participant">Participant</Button>
+          <Button variant={registerType === "organizer" ? "primary" : "outline-primary"} value="organizer">Organizateur</Button>
+        </ButtonGroup>
+        {registerType === "participant" ? (<RegisterParticipant registerParticipant={register}/>):""}
+        {registerType === "organizer" ? (<RegisterOrganizer registerOrganizer={register}/>):""}
     </Container>
   )
 }
