@@ -57,10 +57,10 @@ public class OrganizerControllerTests {
     public void testLogin() throws Exception {
         //Arrange
         User credentials = new User();
-        credentials.setEmail("organizer@example.com");
+        credentials.setId(1);
 
         Organizer expected = new Organizer();
-        expected.setEmail(credentials.getEmail());
+        expected.setId(credentials.getId());
 
         when(service.login(any())).thenReturn(Optional.of(expected));
 
@@ -73,6 +73,6 @@ public class OrganizerControllerTests {
         //Assert
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
         var actual = mapper.readValue(result.getResponse().getContentAsString(), Organizer.class);
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actual.getId()).isEqualTo(expected.getId());
     }
 }

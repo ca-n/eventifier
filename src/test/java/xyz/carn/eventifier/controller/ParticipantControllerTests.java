@@ -57,10 +57,10 @@ public class ParticipantControllerTests {
     public void testLogin() throws Exception {
         //Arrange
         User credentials = new User();
-        credentials.setEmail("participant@example.com");
+        credentials.setId(1);
 
         Participant expected = new Participant();
-        expected.setEmail(credentials.getEmail());
+        expected.setId(credentials.getId());
 
         when(service.login(any())).thenReturn(Optional.of(expected));
 
@@ -73,6 +73,6 @@ public class ParticipantControllerTests {
         //Assert
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
         var actual = mapper.readValue(result.getResponse().getContentAsString(), Participant.class);
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actual.getId()).isEqualTo(expected.getId());
     }
 }
