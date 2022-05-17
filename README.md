@@ -11,7 +11,7 @@ For building and running the application you need:
 - [JDK 1.17](https://www.oracle.com/java/technologies/downloads/#java17)
 - [Maven 3](https://maven.apache.org)
 
-## Running the application locally
+### Running the application locally
 
 There are several ways to run a Spring Boot application on your local machine. One way is to execute the `main` method in the `xyz.carn.eventifier.EventifierApplication` class from your IDE.
 
@@ -34,7 +34,7 @@ Install create-react-app npm package globally. This will help to easily run the 
 npm install -g create-react-app
 ```
 
-## Cloning and Running the Application in local
+### Cloning and Running the Application in local
 
 Clone the project into local
 
